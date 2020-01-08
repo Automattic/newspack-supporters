@@ -183,8 +183,26 @@ class Newspack_Supporters {
 
 		?>
 		<style>
+			@media only screen and (min-width: 600px) {
+				.newspack-supporter-info {
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+				}
+			}
+
+			.wp-block-columns .newspack-supporter-info > a {
+				margin-bottom: 0;
+			}
+
+			.wp-block-columns .newspack-supporter-info > p {
+				margin-top: 0;
+				font-size: .75em;
+			}
+
 			.wp-block-image.supporter-image img {
-				max-height: 200px;
+				max-height: 120px;
+				width: auto;
 			}
 		</style>
 		<?php
@@ -228,7 +246,7 @@ class Newspack_Supporters {
 				$container_closed = false;
 			}
 
-			echo '<div class="wp-block-column">';
+			echo '<div class="wp-block-column newspack-supporter-info">';
 			echo wp_kses_post( $element );
 			echo '</div>';
 
@@ -243,6 +261,11 @@ class Newspack_Supporters {
 
 		// Close last div if needed.
 		if ( ! $container_closed ) {
+			while ( $num_columns !== $current ) {
+				echo '<div class="wp-block-column newspack-supporter-info"></div>';
+				++$current;
+			}
+
 			echo '</div><hr class="wp-block-separator is-style-wide">';
 		}
 
