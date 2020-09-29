@@ -155,7 +155,9 @@ class Newspack_Supporters {
 	 * @return string HTML shortcode output.
 	 */
 	public static function render_supporters_shortcode( $atts ) {
-		$type = ! empty( $atts['type'] ) ? sanitize_text_field( $atts['type'] ) : '';
+		$type        = ! empty( $atts['type'] ) ? sanitize_text_field( $atts['type'] ) : '';
+		$num_columns = ! empty( $atts['columns'] ) ? intval( $atts['columns'] ) : 3;
+		$show_links  = isset( $atts['show_links'] ) && 'false' === strtolower( $atts['show_links'] ) ? false : true;
 
 		$query_args = [
 			'post_type'      => self::POST_TYPE,
@@ -228,16 +230,19 @@ class Newspack_Supporters {
 		 		$supporter_html .= $logo_html;
 			}
 
-			$supporter_name = $supporter->post_title;
-			if ( $supporter_url ) {
-				$supporter_name = '<a href="' . esc_url( $supporter_url ) . '">' . $supporter_name . '</a>';
+			if ( $show_links ) {
+				$supporter_name = $supporter->post_title;
+				if ( $supporter_url ) {
+					$supporter_name = '<a href="' . esc_url( $supporter_url ) . '">' . $supporter_name . '</a>';
+				}
+				$supporter_html .= '<p class="has-text-align-center">' . $supporter_name . '</p>';
 			}
-			$supporter_html .= '<p class="has-text-align-center">' . $supporter_name . '</p>';
 
-			$elements[] = $supporter_html;
+			if ( ! empty( $supporter_html ) ) {
+				$elements[] = $supporter_html;
+			}
 		}
 
-		$num_columns      = 3;
 		$current          = 0;
 		$container_closed = true;
 		foreach ( $elements as $element ) {
