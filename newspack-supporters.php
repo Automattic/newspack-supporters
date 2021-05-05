@@ -46,7 +46,7 @@ class Newspack_Supporters {
 	 * Register post type and taxonomy.
 	 */
 	public static function register() {
-		register_post_type( 
+		register_post_type(
 			self::POST_TYPE,
 			[
 				'labels'              => [
@@ -68,8 +68,8 @@ class Newspack_Supporters {
 				'show_in_menu'        => true,
 				'show_in_nav_menus'   => false,
 				'show_in_admin_bar'   => false,
-				'show_in_rest'        => false,
-				'supports'            => [ 'title', 'thumbnail' ],
+				'show_in_rest'        => true,
+				'supports'            => [ 'title', 'thumbnail', 'newspack_blocks' ],
 			]
 		);
 
